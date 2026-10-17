@@ -9,18 +9,18 @@
 
 | # | Sistema | Categoria | Repositório | Status |
 |---|---|---|---|---|
-| 01 | **CRM Completo** — Funil de vendas único com histórico, tarefas e indicadores calculados do banco | Comercial | `crm-completo` | VALIDADO |
-| 02 | **Gestão de Propostas Comerciais** — Propostas profissionais com catálogo, preços, versões imutáveis, PDF, link seguro de aceite e indicadores comerciais | Comercial | `propostas-comerciais` | VALIDADO |
-| 03 | **Qualificador de Leads Inteligente** — Formulários públicos com condicionais, score transparente de 0 a 100, distribuição e indicadores por campanha | Comercial | `qualificador-leads` | VALIDADO |
-| 04 | **Pós-Venda e Reativação de Clientes** — Histórico de compras, RFM transparente, oportunidades de reativação e campanhas com resultados observados | Comercial | `pos-venda` | VALIDADO |
-| 05 | **Portal de Clientes B2B** — Painel da prestadora e portal do cliente: solicitações com prazo, documentos privados, entregas e comunicados, isolado por empresa | Comercial | `portal-b2b` | VALIDADO |
-| 06 | **Financeiro Completo** — Controle de contas, categorias e fluxo de caixa com lançamentos auditáveis | Gestão | `financeiro-completo` | VALIDADO |
-| 07 | **Controle de Estoque** — Saldo confiável por depósito com movimentação auditável e alerta de mínimo | Gestão | `controle-de-estoque` | VALIDADO |
-| 08 | **Precificação** — Cálculo transparente de preço, margem e markup com cenários comparáveis | Gestão | `precificacao` | VALIDADO |
-| 09 | **Dashboard Executivo** — Importação de CSV com mapeamento de colunas e KPIs comparativos por período | Gestão | `dashboard-executivo` | VALIDADO |
-| 10 | **Gestão de Comissões** — Planos de comissão por faixa com estornos e fechamentos rastreáveis | Gestão | `gestao-de-comissoes` | VALIDADO |
-| 11 | **Agendamento Online** — Reserva pública com disponibilidade real, bloqueios e reagendamento | Operações | `agendamento-online` | VALIDADO |
-| 12 | **Central de Chamados** — Tickets com SLA, responsáveis, notas e métricas | Operações | `central-de-chamados` | VALIDADO |
+| 01 | **CRM Completo** — Funil de vendas único com histórico, tarefas e indicadores calculados do banco | Comercial | [`crm-completo`](https://github.com/pack-25-sistemas-ia/crm-completo) | VALIDADO |
+| 02 | **Gestão de Propostas Comerciais** — Propostas profissionais com catálogo, preços, versões imutáveis, PDF, link seguro de aceite e indicadores comerciais | Comercial | [`propostas-comerciais`](https://github.com/pack-25-sistemas-ia/propostas-comerciais) | VALIDADO |
+| 03 | **Qualificador de Leads Inteligente** — Formulários públicos com condicionais, score transparente de 0 a 100, distribuição e indicadores por campanha | Comercial | [`qualificador-leads`](https://github.com/pack-25-sistemas-ia/qualificador-leads) | VALIDADO |
+| 04 | **Pós-Venda e Reativação de Clientes** — Histórico de compras, RFM transparente, oportunidades de reativação e campanhas com resultados observados | Comercial | [`pos-venda`](https://github.com/pack-25-sistemas-ia/pos-venda) | VALIDADO |
+| 05 | **Portal de Clientes B2B** — Painel da prestadora e portal do cliente: solicitações com prazo, documentos privados, entregas e comunicados, isolado por empresa | Comercial | [`portal-b2b`](https://github.com/pack-25-sistemas-ia/portal-b2b) | VALIDADO |
+| 06 | **Financeiro Completo** — Controle de contas, categorias e fluxo de caixa com lançamentos auditáveis | Gestão | [`financeiro-completo`](https://github.com/pack-25-sistemas-ia/financeiro-completo) | VALIDADO |
+| 07 | **Controle de Estoque** — Saldo confiável por depósito com movimentação auditável e alerta de mínimo | Gestão | [`controle-de-estoque`](https://github.com/pack-25-sistemas-ia/controle-de-estoque) | VALIDADO |
+| 08 | **Precificação** — Cálculo transparente de preço, margem e markup com cenários comparáveis | Gestão | [`precificacao`](https://github.com/pack-25-sistemas-ia/precificacao) | VALIDADO |
+| 09 | **Dashboard Executivo** — Importação de CSV com mapeamento de colunas e KPIs comparativos por período | Gestão | [`dashboard-executivo`](https://github.com/pack-25-sistemas-ia/dashboard-executivo) | VALIDADO |
+| 10 | **Gestão de Comissões** — Planos de comissão por faixa com estornos e fechamentos rastreáveis | Gestão | [`gestao-de-comissoes`](https://github.com/pack-25-sistemas-ia/gestao-de-comissoes) | VALIDADO |
+| 11 | **Agendamento Online** — Reserva pública com disponibilidade real, bloqueios e reagendamento | Operações | [`agendamento-online`](https://github.com/pack-25-sistemas-ia/agendamento-online) | VALIDADO |
+| 12 | **Central de Chamados** — Tickets com SLA, responsáveis, notas e métricas | Operações | [`central-de-chamados`](https://github.com/pack-25-sistemas-ia/central-de-chamados) | VALIDADO |
 | 13 | **Ordens de Serviço** — Ciclo completo da OS com checklist, peças, fotos e aceite simples | Operações | `ordens-de-servico` | PLANEJADO |
 | 14 | **Gestão de Projetos** — Quadro Kanban por projeto com prazos, responsáveis e comentários | Operações | `gestao-de-projetos` | PLANEJADO |
 | 15 | **Gestão de Contratos** — Cadastro de contratos com arquivos, vencimentos e lembretes | Operações | `gestao-de-contratos` | PLANEJADO |
