@@ -17,6 +17,21 @@
 ## Fora do escopo
 Folha de pagamento, encargos trabalhistas, pagamento bancário/PIX/remessa, emissão fiscal, integração contábil automática, XLSX.
 
+## Começar em 1 minuto (com Claude Code ou Codex)
+
+1. Abra o **Claude Code** (ou o Codex) numa pasta vazia do seu computador.
+2. Copie o link deste repositório e cole no chat com o pedido abaixo:
+
+```text
+Instale o Gestão de Comissões: https://github.com/pack-25-sistemas-ia/gestao-de-comissoes
+Clone numa pasta nova e siga o guia .claude/commands/instalar.md. Explique cada passo e me pergunte quando precisar de algo meu.
+```
+
+3. Pronto: o agente clona, instala, sobe o banco local e abre o sistema. Depois da primeira vez, dentro da pasta, basta digitar `/instalar` no Claude Code para refazer ou consertar a instalação.
+
+Prefere fazer à mão? Os passos manuais estão logo abaixo.
+
+
 ## Começando (local)
 ```bash
 pnpm install --frozen-lockfile

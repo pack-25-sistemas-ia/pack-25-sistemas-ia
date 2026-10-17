@@ -16,6 +16,21 @@
 ## Fora do escopo do MVP
 Telefonia, WhatsApp, chat em tempo real, caixa de entrada/conversão de e-mail em chamado, envio de e-mail como requisito, chatbot, aplicativo nativo, base de conhecimento, gestão de ativos, contratos e faturamento, automação visual de workflows, SLA contratual por cliente, feriados automáticos, formulário público anônimo e IA. **Nenhum botão de integração inexistente é exibido.** Sem IA o sistema funciona integralmente.
 
+## Começar em 1 minuto (com Claude Code ou Codex)
+
+1. Abra o **Claude Code** (ou o Codex) numa pasta vazia do seu computador.
+2. Copie o link deste repositório e cole no chat com o pedido abaixo:
+
+```text
+Instale o Central de Chamados: https://github.com/pack-25-sistemas-ia/central-de-chamados
+Clone numa pasta nova e siga o guia .claude/commands/instalar.md. Explique cada passo e me pergunte quando precisar de algo meu.
+```
+
+3. Pronto: o agente clona, instala, sobe o banco local, carrega os dados de demonstração e abre o sistema. Depois da primeira vez, dentro da pasta, basta digitar `/instalar` no Claude Code para refazer ou consertar a instalação.
+
+Prefere fazer à mão? Os passos manuais estão logo abaixo.
+
+
 ## Pré-requisitos
 Node 22+, pnpm 12, Docker (Supabase local e `pnpm test:db`), conta Supabase **na região de São Paulo** para produção e hospedagem Node (ex.: Vercel).
 

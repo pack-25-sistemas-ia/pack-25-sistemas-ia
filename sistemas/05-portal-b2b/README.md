@@ -17,6 +17,21 @@ Um **portal exclusivo para os clientes da sua empresa** e um **painel para a sua
 - **Comunicados** para todos ou para clientes escolhidos, com agendamento e expiração; **notificações internas**.
 - **Painel** (10 indicadores, 8 gráficos, filtros, alertas), o mesmo para a equipe e para o cliente (cada um vê só o que pode); **5 relatórios com CSV auditado**; **white-label** (nome, cores, textos de contato e rodapé).
 
+## Começar em 1 minuto (com Claude Code ou Codex)
+
+1. Abra o **Claude Code** (ou o Codex) numa pasta vazia do seu computador.
+2. Copie o link deste repositório e cole no chat com o pedido abaixo:
+
+```text
+Instale o Portal de Clientes B2B: https://github.com/pack-25-sistemas-ia/portal-b2b
+Clone numa pasta nova e siga o guia .claude/commands/instalar.md. Explique cada passo e me pergunte quando precisar de algo meu.
+```
+
+3. Pronto: o agente clona, instala, sobe o banco local e abre o sistema. Depois da primeira vez, dentro da pasta, basta digitar `/instalar` no Claude Code para refazer ou consertar a instalação.
+
+Prefere fazer à mão? Os passos manuais estão logo abaixo.
+
+
 ## Começar
 ```bash
 pnpm install

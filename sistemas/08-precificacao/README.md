@@ -21,6 +21,21 @@ Formação de preços e análise de rentabilidade **multiempresa**: composição
 ## Não faz (fora do escopo)
 Apuração tributária oficial, emissão fiscal, integração com marketplaces (publicar é interno), previsão de demanda ou elasticidade, XLSX/PDF, promessa de lucro.
 
+## Começar em 1 minuto (com Claude Code ou Codex)
+
+1. Abra o **Claude Code** (ou o Codex) numa pasta vazia do seu computador.
+2. Copie o link deste repositório e cole no chat com o pedido abaixo:
+
+```text
+Instale o Precificação: https://github.com/pack-25-sistemas-ia/precificacao
+Clone numa pasta nova e siga o guia .claude/commands/instalar.md. Explique cada passo e me pergunte quando precisar de algo meu.
+```
+
+3. Pronto: o agente clona, instala, sobe o banco local e abre o sistema. Depois da primeira vez, dentro da pasta, basta digitar `/instalar` no Claude Code para refazer ou consertar a instalação.
+
+Prefere fazer à mão? Os passos manuais estão logo abaixo.
+
+
 ## Começar
 ```bash
 pnpm install
