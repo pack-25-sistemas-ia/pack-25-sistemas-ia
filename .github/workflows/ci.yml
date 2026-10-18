@@ -1381,3 +1381,132 @@ jobs:
             for i in $(seq 1 60); do curl -fs http://localhost:3126/login >/dev/null && break; sleep 1; done
             pnpm test:e2e "tests/e2e/$spec.spec.ts" --grep-invert "capturas"
           done
+
+  ordens-de-servico-db:
+    name: Ordens de Serviço (banco, RLS, orçamento, aceite por link, segurança e concorrência real)
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+      - name: Banco (Core + domínio, execução, painel e documentos, link público, segurança e integridade)
+        working-directory: sistemas/13-ordens-de-servico
+        run: node scripts/test-db.mjs
+      - name: Concorrência real (numeração, duplo clique, início, aprovação × publicação, decisões simultâneas, aceite × contestação, encerrar × reabrir, peças)
+        working-directory: sistemas/13-ordens-de-servico
+        run: node scripts/test-concurrency.mjs
+
+  ordens-de-servico-mutation:
+    name: Ordens de Serviço (mutação das regras críticas, em motor, banco e concorrência)
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+      - run: npm install --global pnpm@12.6.0
+      - name: Dependências (a suíte unitária da mutação precisa do vitest)
+        working-directory: sistemas/13-ordens-de-servico
+        run: pnpm install --frozen-lockfile
+      - name: Mutação das regras críticas
+        working-directory: sistemas/13-ordens-de-servico
+        run: node scripts/mutation-check.mjs --jobs 3
+
+  ordens-de-servico-web:
+    name: Ordens de Serviço (lint, tipos, testes, build)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: sistemas/13-ordens-de-servico
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+      - run: npm install --global pnpm@12.6.0
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+      - name: Build (variáveis fictícias, só para compilar)
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: http://127.0.0.1:59021
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: build-only-placeholder-key-not-a-secret
+          NEXT_PUBLIC_APP_URL: http://localhost:3127
+          OS_LINK_SALT: ci-only-salt-not-a-secret-0123456789abcdef
+        run: pnpm build
+
+  ordens-de-servico-e2e:
+    name: Ordens de Serviço (ponta a ponta com Supabase real e dados de demonstração)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      SUPABASE_CLI_VERSION: 2.120.0
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+      - run: npm install --global pnpm@12.6.0
+      - name: Instalar Supabase CLI (versão fixa, checksum verificado)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/sb" && cd "$RUNNER_TEMP/sb"
+          gh release download "v${SUPABASE_CLI_VERSION}" -R supabase/cli -p checksums.txt -p "supabase_${SUPABASE_CLI_VERSION}_linux_amd64.tar.gz"
+          grep " supabase_${SUPABASE_CLI_VERSION}_linux_amd64.tar.gz\$" checksums.txt | sha256sum -c -
+          tar -xzf "supabase_${SUPABASE_CLI_VERSION}_linux_amd64.tar.gz"
+          echo "$RUNNER_TEMP/sb" >> "$GITHUB_PATH"
+      - name: Subir Supabase local (migrações + seed de demonstração)
+        working-directory: sistemas/13-ordens-de-servico
+        run: |
+          supabase start -x realtime,imgproxy,postgres-meta,studio,edge-runtime,logflare,vector,supavisor
+          supabase db reset
+          supabase status -o json > "$RUNNER_TEMP/sb-status.json"
+          sleep 8
+      - run: pnpm install --frozen-lockfile
+        working-directory: sistemas/13-ordens-de-servico
+      - run: pnpm exec playwright install --with-deps chromium
+        working-directory: sistemas/13-ordens-de-servico
+      - name: Build e iniciar o app
+        working-directory: sistemas/13-ordens-de-servico
+        run: |
+          export NEXT_PUBLIC_SUPABASE_URL="$(jq -r .API_URL "$RUNNER_TEMP/sb-status.json")"
+          export NEXT_PUBLIC_SUPABASE_ANON_KEY="$(jq -r .PUBLISHABLE_KEY "$RUNNER_TEMP/sb-status.json")"
+          export NEXT_PUBLIC_APP_URL=http://localhost:3127
+          export OS_LINK_SALT=ci-only-salt-not-a-secret-0123456789abcdef
+          pnpm build
+          (PORT=3127 nohup pnpm start > "$RUNNER_TEMP/app.log" 2>&1 &)
+          for i in $(seq 1 60); do curl -fs http://localhost:3127/login >/dev/null && exit 0; sleep 1; done
+          cat "$RUNNER_TEMP/app.log"; exit 1
+      - name: Testes ponta a ponta (um arquivo por vez, banco recriado antes de cada um)
+        working-directory: sistemas/13-ordens-de-servico
+        run: |
+          export E2E_BASE_URL=http://localhost:3127
+          export E2E_SUPABASE_URL="$(jq -r .API_URL "$RUNNER_TEMP/sb-status.json")"
+          export E2E_SUPABASE_ANON_KEY="$(jq -r .PUBLISHABLE_KEY "$RUNNER_TEMP/sb-status.json")"
+          export E2E_MAILPIT_URL="$(jq -r .MAILPIT_URL "$RUNNER_TEMP/sb-status.json")"
+          for spec in core-flow email-flows security os-demo os-flow os-security os-responsive; do
+            supabase db reset
+            sleep 8
+            node scripts/seed-demo.mjs
+            # reinicia o app: o limitador de login do Core é em memória e os testes entram várias vezes com as mesmas contas
+            pkill -f "next-server|next start" || true
+            sleep 1
+            (PORT=3127 OS_LINK_SALT=ci-only-salt-not-a-secret-0123456789abcdef nohup pnpm start > "$RUNNER_TEMP/app-$spec.log" 2>&1 &)
+            for i in $(seq 1 60); do curl -fs http://localhost:3127/login >/dev/null && break; sleep 1; done
+            pnpm test:e2e "tests/e2e/$spec.spec.ts" --grep-invert "capturas"
+          done
