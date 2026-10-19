@@ -1,4 +1,4 @@
-# CLAUDE — Gestão de Projetos
+# CLAUDE — Gestão de Projetos e Tarefas
 
 @AGENTS.md
 
