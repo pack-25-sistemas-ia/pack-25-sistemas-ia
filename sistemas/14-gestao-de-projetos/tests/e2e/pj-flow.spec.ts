@@ -32,7 +32,7 @@ test('2. gestor adiciona participantes com papÃ©is (editor e leitor) e o papel Â
   await addForm(page).getByLabel('Pessoa', { exact: true }).selectOption({ label: 'Ana Ribeiro (Colaborador)' });
   await addForm(page).getByLabel('Papel no projeto').selectOption('editor');
   await page.getByRole('button', { name: 'Adicionar ao projeto' }).click();
-  await expect(page.getByText('Participante adicionado.').first()).toBeVisible();
+  await expect(page.getByRole('row', { name: /Ana Ribeiro/ })).toBeVisible({ timeout: 15000 }); // espera o resultado real (a mensagem anterior pode ainda estar na tela)
   await page.goto(`${projectUrl}/membros`);
   await addForm(page).getByLabel('Pessoa', { exact: true }).selectOption({ label: 'Eduardo Leitor (Leitor)' });
   await addForm(page).getByLabel('Papel no projeto').selectOption('editor');
@@ -42,7 +42,7 @@ test('2. gestor adiciona participantes com papÃ©is (editor e leitor) e o papel Â
   await addForm(page).getByLabel('Pessoa', { exact: true }).selectOption({ label: 'Eduardo Leitor (Leitor)' });
   await addForm(page).getByLabel('Papel no projeto').selectOption('reader');
   await page.getByRole('button', { name: 'Adicionar ao projeto' }).click();
-  await expect(page.getByText('Participante adicionado.').first()).toBeVisible();
+  await expect(page.getByRole('row', { name: /Eduardo Leitor/ })).toBeVisible({ timeout: 15000 });
   await page.goto(`${projectUrl}/membros`);
   await expect(page.getByRole('row', { name: /Ana Ribeiro/ })).toContainText('Editor', { timeout: 15000 });
   await expect(page.getByRole('row', { name: /Eduardo Leitor/ })).toContainText('Leitor', { timeout: 15000 });
