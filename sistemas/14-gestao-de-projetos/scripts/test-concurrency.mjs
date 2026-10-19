@@ -144,10 +144,10 @@ try {
   check(rA.filter((r) => r.code !== 0).every((r) => /Outra pessoa alterou/.test(r.err)), 'as demais recebem conflito de versão');
   check((await sa(`select count(*) from public.task_events where task_id = '${T1}' and event_type = 'assignee_changed'`)) === '1', 'um único evento de responsável');
 
-  console.log('> concluir × adicionar item obrigatório (6 rodadas): nunca uma tarefa concluída com obrigatório pendente');
+  console.log('> concluir × adicionar item obrigatório (12 rodadas): nunca uma tarefa concluída com obrigatório pendente');
   const done = await col(P, 'done');
   let badChk = 0;
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 12; i++) {
     const T = await mkTask(P, `Checklist ${i}`);
     await one(`select public.pj_move_task(${O}, '${T}', '${prog}', null, null)`, 'lead');
     const rr = await fire(2, (k) => (k === 0

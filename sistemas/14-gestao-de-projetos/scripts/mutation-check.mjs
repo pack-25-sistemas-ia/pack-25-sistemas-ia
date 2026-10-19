@@ -563,7 +563,9 @@ async function worker() {
       broken.push(m.name);
       continue;
     }
-    const r = await runSuite(dir, suite);
+    // mutante de concorrência depende de a corrida acontecer: se sobreviver, tenta de novo (até 3 vezes) antes de dar por sobrevivente
+    let r = await runSuite(dir, suite);
+    for (let tentativa = 1; suite === "conc" && r.code === 0 && !r.hung && tentativa < 3; tentativa++) r = await runSuite(dir, suite);
     rmSync(dir, { recursive: true, force: true });
     if (r.hung) { console.log(`TRAVOU     ${m.name}`); hungList.push(m.name); continue; }
     const killed = r.code !== 0;
