@@ -93,6 +93,34 @@ test('exportação CSV neutraliza fórmulas de planilha e respeita filtros', asy
   expect([401, 302, 307, 308]).toContain(noAuth.status);
 });
 
+test('anexos no Storage REAL: quem edita envia e baixa; quem não participa não baixa; o órfão do próprio envio pode ser removido', async () => {
+  const ana = await token(DEMO.ana);
+  const diego = await token(DEMO.diego);
+  const org = ((await (await rest(ana.jwt, 'organization_members?select=organization_id&limit=1')).json()) as Array<{ organization_id: string }>)[0]!.organization_id;
+  const hex = () => Array.from({ length: 32 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
+  const put = (jwt: string, path: string, upsert = false) => fetch(`${SUPABASE_URL}/storage/v1/object/pj-files/${path}`, { method: 'POST', headers: { apikey: ANON_KEY, authorization: `Bearer ${jwt}`, 'content-type': 'application/pdf', ...(upsert ? { 'x-upsert': 'true' } : {}) }, body: '%PDF-1.4\n%%EOF\n' });
+  const path = `${org}/${p3Task}/${hex()}.pdf`;
+  expect((await put(diego.jwt, path)).status).toBeGreaterThanOrEqual(400); // quem não participa não envia
+  expect((await put(ana.jwt, path)).status).toBe(200);
+  const reg = await rest(ana.jwt, 'rpc/pj_add_attachments', { method: 'POST', body: JSON.stringify({ p_org: org, p_task: p3Task, p_idem: crypto.randomUUID(), p_files: [{ path, mime: 'application/pdf', size: 15, filename: 'teste.pdf' }] }) });
+  expect(reg.status).toBe(200);
+  const sign = (jwt: string) => fetch(`${SUPABASE_URL}/storage/v1/object/sign/pj-files/${path}`, { method: 'POST', headers: { apikey: ANON_KEY, authorization: `Bearer ${jwt}`, 'content-type': 'application/json' }, body: JSON.stringify({ expiresIn: 60 }) });
+  const ok = await sign(ana.jwt);
+  expect(ok.status).toBe(200);
+  const signed = ((await ok.json()) as { signedURL: string }).signedURL;
+  expect((await fetch(`${SUPABASE_URL}/storage/v1${signed}`)).status).toBe(200); // a URL assinada curta entrega o arquivo
+  expect((await sign(diego.jwt)).status).toBeGreaterThanOrEqual(400); // quem não participa não consegue sequer assinar
+  // arquivo enviado e NÃO registrado (envio interrompido): quem enviou remove na hora; o registrado não pode ser removido
+  const orphan = `${org}/${p3Task}/${hex()}.pdf`;
+  expect((await put(ana.jwt, orphan)).status).toBe(200);
+  const rm = (p: string) => fetch(`${SUPABASE_URL}/storage/v1/object/pj-files/${p}`, { method: 'DELETE', headers: { apikey: ANON_KEY, authorization: `Bearer ${ana.jwt}` } });
+  const del = await rm(orphan);
+  expect(del.status).toBe(200);
+  const keep = await rm(path);
+  expect(keep.status).toBeGreaterThanOrEqual(400); // anexo registrado não pode ser removido pelo Storage
+  expect((await sign(ana.jwt)).status).toBe(200);
+});
+
 test('remover o participante revoga o acesso na hora: tarefas, projeto e notificações somem para ele', async ({ page }) => {
   const gestor = await token(DEMO.gestor);
   const ana = await token(DEMO.ana);

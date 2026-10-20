@@ -188,8 +188,9 @@ export async function uploadAttachments(_prev: ActionState, fd: FormData): Promi
     if (!prep.files.length) return fail('Escolha ao menos um arquivo.', { file: ['Escolha ao menos um arquivo.'] });
     const uploaded: string[] = [];
     for (const f of prep.files) {
-      const up = await ctx.supabase.storage.from('pj-files').upload(f.path, f.bytes, { contentType: f.mime, upsert: true });
-      if (up.error) {
+      // sem upsert: a política do Storage só permite INSERIR. O caminho é determinístico (chave + conteúdo): reenviar o mesmo envio encontra o arquivo já gravado, o que é sucesso.
+      const up = await ctx.supabase.storage.from('pj-files').upload(f.path, f.bytes, { contentType: f.mime, upsert: false });
+      if (up.error && !/already exists|duplicate|resource already/i.test(up.error.message)) {
         if (uploaded.length) await ctx.supabase.storage.from('pj-files').remove(uploaded);
         return fail(up.error.message.toLowerCase().includes('row-level') ? 'Você não tem permissão para anexar nesta tarefa.' : 'Não foi possível enviar o arquivo. Tente novamente.');
       }

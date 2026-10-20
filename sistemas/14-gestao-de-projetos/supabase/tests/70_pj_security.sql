@@ -211,7 +211,7 @@ begin
   assert bad is null, 'anon executa função do sistema (este sistema não tem porta pública): ' || coalesce(bad, '');
   select string_agg(p.oid::regprocedure::text, ', ') into bad from pg_proc p join pg_namespace n on n.oid = p.pronamespace
   where n.nspname = 'private' and p.proname like 'pj\_%' and has_function_privilege('authenticated', p.oid, 'execute')
-    and p.proname not in ('pj_role', 'pj_profile', 'pj_is_owner', 'pj_is_manager', 'pj_is_member', 'pj_project_role', 'pj_can_see_project', 'pj_can_edit_project', 'pj_can_lead_project', 'pj_can_edit_task', 'pj_can_see_task', 'pj_guard');
+    and p.proname not in ('pj_role', 'pj_profile', 'pj_is_owner', 'pj_is_manager', 'pj_is_member', 'pj_project_role', 'pj_can_see_project', 'pj_can_edit_project', 'pj_can_lead_project', 'pj_can_edit_task', 'pj_can_see_task', 'pj_file_readable', 'pj_file_registered', 'pj_guard');
   assert bad is null, 'authenticated executa função interna: ' || coalesce(bad, '');
   select string_agg(p.oid::regprocedure::text, ', ') into bad from pg_proc p join pg_namespace n on n.oid = p.pronamespace
   where n.nspname = 'public' and p.proname like 'pj\_%' and not has_function_privilege('authenticated', p.oid, 'execute');
