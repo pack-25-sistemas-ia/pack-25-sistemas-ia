@@ -1,4 +1,4 @@
-# CLAUDE — Gestão de Contratos
+# CLAUDE — Gestão de Contratos e Vencimentos
 
 @AGENTS.md
 

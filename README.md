@@ -3,7 +3,7 @@
 25 sistemas MVP para pequenas e médias empresas, prontos para você personalizar com **Claude Code** ou **Codex**, conectar a um banco Supabase seu e publicar.
 
 > ## Estado real (2026-10-18)
-> **14 dos 25 sistemas estão validados: CRM Completo, Gestão de Propostas Comerciais, Qualificador de Leads, Pós-Venda e Reativação, Portal de Clientes B2B, Financeiro Completo, Controle de Estoque, Precificação, Dashboard Executivo, Gestão de Comissões, Agendamento Online, Central de Chamados, Ordens de Serviço e Gestão de Projetos.** Os outros 11 estão planejados e ainda não estão disponíveis para uso. O repositório traz o catálogo, os padrões de segurança e privacidade, o núcleo (organizações, papéis, RLS e auditoria) e o CRM, com testes executados e CI verde. O status de cada sistema abaixo é lido de [catalogo/sistemas.json](catalogo/sistemas.json) e só muda após os gates de qualidade. Nada aqui promete renda ou vendas: o pack reduz tempo de desenvolvimento; implantar e vender depende de adequação, testes, hospedagem, suporte e prospecção.
+> **15 dos 25 sistemas estão validados: CRM Completo, Gestão de Propostas Comerciais, Qualificador de Leads, Pós-Venda e Reativação, Portal de Clientes B2B, Financeiro Completo, Controle de Estoque, Precificação, Dashboard Executivo, Gestão de Comissões, Agendamento Online, Central de Chamados, Ordens de Serviço, Gestão de Projetos e Gestão de Contratos.** Os outros 10 estão planejados e ainda não estão disponíveis para uso. O repositório traz o catálogo, os padrões de segurança e privacidade, o núcleo (organizações, papéis, RLS e auditoria) e o CRM, com testes executados e CI verde. O status de cada sistema abaixo é lido de [catalogo/sistemas.json](catalogo/sistemas.json) e só muda após os gates de qualidade. Nada aqui promete renda ou vendas: o pack reduz tempo de desenvolvimento; implantar e vender depende de adequação, testes, hospedagem, suporte e prospecção.
 
 ## Catálogo
 
@@ -23,7 +23,7 @@
 | 12 | **Central de Chamados** — Tickets com SLA, responsáveis, notas e métricas | Operações | [`central-de-chamados`](https://github.com/pack-25-sistemas-ia/central-de-chamados) | VALIDADO |
 | 13 | **Ordens de Serviço** — Ciclo completo da OS com checklist, peças, fotos e aceite simples | Operações | [`ordens-de-servico`](https://github.com/pack-25-sistemas-ia/ordens-de-servico) | VALIDADO |
 | 14 | **Gestão de Projetos** — Quadro Kanban por projeto com prazos, responsáveis e comentários | Operações | [`gestao-de-projetos`](https://github.com/pack-25-sistemas-ia/gestao-de-projetos) | VALIDADO |
-| 15 | **Gestão de Contratos** — Cadastro de contratos com arquivos, vencimentos e lembretes | Operações | `gestao-de-contratos` | PLANEJADO |
+| 15 | **Gestão de Contratos** — Cadastro de contratos com arquivos, vencimentos e lembretes | Operações | [`gestao-de-contratos`](https://github.com/pack-25-sistemas-ia/gestao-de-contratos) | VALIDADO |
 | 16 | **Dashboard de Marketing** — Visão consolidada de custo, conversão, ROAS e CPL por importação CSV | Marketing | `dashboard-de-marketing` | PLANEJADO |
 | 17 | **Pesquisa NPS e Satisfação** — Pesquisa pública NPS/CSAT com alertas para detratores e relatório | Marketing | `pesquisa-nps` | PLANEJADO |
 | 18 | **Programa de Fidelidade** — Pontos, recompensas e resgates com extrato imutável | Marketing | `programa-de-fidelidade` | PLANEJADO |
